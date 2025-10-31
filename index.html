@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Health n Shape - Lucky Number</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
 
   <style>
     body {
@@ -73,53 +73,51 @@
   </style>
 </head>
 <body>
-  <!-- Brand Title -->
-  <div class="brand-title">Health n Shape</div>
 
-  <!-- Lucky Number Display -->
+  <div class="brand-title">Health n Shape</div>
   <div class="number-display" id="luckyNumber"></div>
 
   <script>
-    // ========= Settings =========
-    const numberList = [7, 21, 33, 45, 88]; // Predefined lucky numbers
-    const storageKey = 'luckyNumberData';
-    const hoursValid = 24;
+    // ======== Configuration ========
+    const numberList = [7, 21, 33, 45, 88];   // Your predefined lucky numbers
+    const storageKey = 'healthnshape_number';
+    const lockHours = 5; // Time to "lock" number per device/browser
 
-    // ========== Functions ==========
+    // ======== Utility Functions ========
+
     function getStoredLuckyNumber() {
       const data = JSON.parse(localStorage.getItem(storageKey));
       if (!data) return null;
 
-      const now = new Date().getTime();
-      const timeDiff = now - data.timestamp;
+      const now = Date.now();
+      const age = now - data.timestamp;
 
-      // Check if saved number is still valid (within 24 hours)
-      if (timeDiff < hoursValid * 60 * 60 * 1000) {
+      if (age < lockHours * 60 * 60 * 1000) {
         return data.number;
-      } else {
-        return null;
       }
+
+      return null; // expired
     }
 
-    function storeLuckyNumber(number) {
+    function saveLuckyNumber(number) {
       const data = {
         number: number,
-        timestamp: new Date().getTime()
+        timestamp: Date.now()
       };
       localStorage.setItem(storageKey, JSON.stringify(data));
     }
 
-    function pickRandomNumber() {
-      const index = Math.floor(Math.random() * numberList.length);
-      return numberList[index];
+    function generateRandomFromList(list) {
+      const index = Math.floor(Math.random() * list.length);
+      return list[index];
     }
 
-    // ========== Main Logic ==========
+    // ======== Main Logic ========
     let luckyNumber = getStoredLuckyNumber();
 
     if (!luckyNumber) {
-      luckyNumber = pickRandomNumber();
-      storeLuckyNumber(luckyNumber);
+      luckyNumber = generateRandomFromList(numberList);
+      saveLuckyNumber(luckyNumber);
     }
 
     document.getElementById('luckyNumber').textContent = luckyNumber;
