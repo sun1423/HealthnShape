@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Health n Shape - Lucky Number</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: radial-gradient(circle at center, #ffecd2 0%, #fcb69f 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      flex-direction: column;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .brand-title {
+      font-size: 2rem;
+      color: #2196f3; /* Bluish text */
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .number-display {
+      background: linear-gradient(145deg, #fff8dc, #fbeec1); /* Cream colors */
+      color: #d2691e; /* Deep orange text */
+      font-weight: bold;
+      font-size: 5rem;
+      padding: 40px 80px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      animation: popIn 1.3s ease-out, glow 2s infinite alternate;
+      text-shadow: 2px 2px 4px #b8860b;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #444;
+      max-width: 85%;
+      line-height: 1.4;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 10px #fff8dc, 0 0 20px #f5deb3;
+      }
+      100% {
+        box-shadow: 0 0 20px #f5deb3, 0 0 35px #ffe4b5;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Title -->
+  <div class="brand-title">Health n Shape</div>
+
+  <!-- Random Lucky Number -->
+  <div class="number-display" id="luckyNumber">--</div>
+
+  <!-- Message -->
+  <div class="message">
+    Lucky you! Call us or <a href="https://wa.me/9999752456
+">WhatsApp us now</a> your code to know your lucky free services.
+  </div>
+
+  <!-- Script -->
+  <script>
+    // Configuration
+    const numberList = [7, 21, 33, 45, 88];   // Predefined numbers
+    const storageKey = 'healthnshape_number';
+    const lockHours = 5;
+
+    // Get from local storage
+    function getStoredLuckyNumber() {
+      const stored = localStorage.getItem(storageKey);
+      if (!stored) return null;
+
+      try {
+        const data = JSON.parse(stored);
+        const now = Date.now();
+        const age = now - data.timestamp;
+
+        if (age < lockHours * 60 * 60 * 1000) {
+          return data.number;
+        }
+      } catch (e) {
+        console.error("Error parsing stored data", e);
+      }
+
+      return null;
+    }
+
+    // Save to local storage
+    function saveLuckyNumber(number) {
+      const info = {
+        number: number,
+        timestamp: Date.now()
+      };
+      localStorage.setItem(storageKey, JSON.stringify(info));
+    }
+
+    // Pick a random number
+    function getRandomNumber() {
+      const index = Math.floor(Math.random() * numberList.length);
+      return numberList[index];
+    }
+
+    // Main logic
+    let luckyNumber = getStoredLuckyNumber();
+
+    if (!luckyNumber) {
+      luckyNumber = getRandomNumber();
+      saveLuckyNumber(luckyNumber);
+    }
+
+    // Display the number
+    const numberEl = document.getElementById("luckyNumber");
+    if (numberEl) numberEl.textContent = luckyNumber;
+  </script>
+</body>
+</html>
