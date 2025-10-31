@@ -18,6 +18,7 @@
       font-family: 'Poppins', sans-serif;
       flex-direction: column;
       overflow: hidden;
+      text-align: center;
     }
 
     .brand-title {
@@ -38,6 +39,14 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       animation: popIn 1.3s ease-out, glow 2s infinite alternate;
       text-shadow: 2px 2px 4px #d2691e;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #444;
+      max-width: 80%;
+      line-height: 1.4;
     }
 
     @keyframes fadeIn {
@@ -74,53 +83,27 @@
 </head>
 <body>
 
+  <!-- Brand Title -->
   <div class="brand-title">Health n Shape</div>
+
+  <!-- Lucky Number Display -->
   <div class="number-display" id="luckyNumber"></div>
+
+  <!-- Optional Footer Message -->
+  <div class="message">
+    Lucky you! Call us 9999752456
+ or WhatsApp your code to know your lucky free services.
+  </div>
 
   <script>
     // ======== Configuration ========
-    const numberList = [7, 21, 33, 45, 88];   // Your predefined lucky numbers
+    const numberList = [7, 21, 33, 45, 88];   // Predefined lucky numbers
     const storageKey = 'healthnshape_number';
-    const lockHours = 5; // Time to "lock" number per device/browser
+    const lockHours = 5; // lock for 5 hours
 
     // ======== Utility Functions ========
-
     function getStoredLuckyNumber() {
       const data = JSON.parse(localStorage.getItem(storageKey));
       if (!data) return null;
 
-      const now = Date.now();
-      const age = now - data.timestamp;
-
-      if (age < lockHours * 60 * 60 * 1000) {
-        return data.number;
-      }
-
-      return null; // expired
-    }
-
-    function saveLuckyNumber(number) {
-      const data = {
-        number: number,
-        timestamp: Date.now()
-      };
-      localStorage.setItem(storageKey, JSON.stringify(data));
-    }
-
-    function generateRandomFromList(list) {
-      const index = Math.floor(Math.random() * list.length);
-      return list[index];
-    }
-
-    // ======== Main Logic ========
-    let luckyNumber = getStoredLuckyNumber();
-
-    if (!luckyNumber) {
-      luckyNumber = generateRandomFromList(numberList);
-      saveLuckyNumber(luckyNumber);
-    }
-
-    document.getElementById('luckyNumber').textContent = luckyNumber;
-  </script>
-</body>
-</html>
+      const 
