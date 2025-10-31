@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Numbers</title>
+</head>
+<body>
+    <h1>Random Numbers:</h1>
+    <ul id="numberList"></ul>
+
+    <script>
+        // Define your list
+        const predefinedList = [23,56,88,90,00, /* ... add as needed */];
+
+        // Shuffle and get 5 random numbers
+        function getRandomNumbers(arr, num) {
+            const shuffled = arr.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, num);
+        }
+
+        const randomNumbers = getRandomNumbers(predefinedList, 5);
+        const list = document.getElementById("numberList");
+
+        randomNumbers.forEach(num => {
+            const li = document.createElement("li");
+            li.textContent = num;
+            list.appendChild(li);
+        });
+    </script>
+</body>
+</html>
