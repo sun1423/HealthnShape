@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lucky Number</title>
+  <title>Health n Shape - Lucky Number</title>
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
@@ -13,8 +17,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Poppins', sans-serif;
+      flex-direction: column;
       overflow: hidden;
+    }
+
+    .brand-title {
+      font-size: 2rem;
+      color: #ff5722;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.5s ease-in-out;
     }
 
     .number-display {
@@ -27,6 +40,17 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       animation: popIn 1.3s ease-out, glow 2s infinite alternate;
       text-shadow: 2px 2px 4px #d2691e;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes popIn {
@@ -51,17 +75,21 @@
   </style>
 </head>
 <body>
+  <!-- Brand Title -->
+  <div class="brand-title">Health n Shape</div>
+
+  <!-- Display Random Number -->
   <div class="number-display" id="luckyNumber"></div>
 
   <script>
-    // List of predefined numbers
+    // List of predefined lucky numbers
     const numberList = [7, 21, 33, 45, 88];
 
-    // Pick one at random
+    // Select one randomly
     const randomIndex = Math.floor(Math.random() * numberList.length);
     const selectedNumber = numberList[randomIndex];
 
-    // Display it in the center
+    // Display the lucky number
     document.getElementById('luckyNumber').textContent = selectedNumber;
   </script>
 </body>
